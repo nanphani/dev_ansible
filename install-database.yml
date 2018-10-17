@@ -1,0 +1,4 @@
+- hosts: sql
+  name: Install the database server from an Ansible Galaxy role
+  roles:
+    - geerlingguy.mysql
