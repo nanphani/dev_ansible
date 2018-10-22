@@ -1,0 +1,33 @@
+---
+- name: Common Tasks
+  hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+  - include_role:
+      name: pCommonTasks
+
+- name: HA Proxy Setup
+  hosts: frontends
+  gather_facts: false
+  become: true
+  tasks:
+  - include_role:
+      name: pHAProxy
+
+- name: Deploy Postgres
+  hosts: appdbs
+  gather_facts: false
+  become: true
+  tasks:
+  - include_role:
+      name: pDBServer
+
+- name: Deploy Tomcat
+  hosts: apps
+  gather_facts: false
+  become: true
+  tasks:
+  - include_role:
+      name: pAppServer
+...
