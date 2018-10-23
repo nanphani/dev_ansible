@@ -6,12 +6,15 @@
     state: latest
 
 - name: Check If Postgres DB is Initialized
-  command: ls -ltr /var/lib/pgsql/data/
-  register: pgdata_files  
-    
+  find:
+    paths: /var/lib/pgsql/data/
+    file_type: directory
+    patterns: "*"
+  register: pgdata_files
+
 - name: Initialize Postgres
   command: postgresql-setup initdb
-  when: pgdata_files.stdout == ""
+  when: pgdata_files.matched|int == 0
 
 - name: start postgres
   service:
